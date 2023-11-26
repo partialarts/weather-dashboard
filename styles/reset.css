@@ -1,0 +1,16 @@
+header {
+    background: rgb(29,12,77);
+    background: -moz-linear-gradient(260deg, rgba(29,12,77,1) 27%, rgba(61,124,251,1) 100%);
+    background: -webkit-linear-gradient(260deg, rgba(29,12,77,1) 27%, rgba(61,124,251,1) 100%);
+    background: linear-gradient(260deg, rgba(29,12,77,1) 27%, rgba(61,124,251,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#1d0c4d",endColorstr="#3d7cfb",GradientType=1);
+}
+
+#form-heading {
+    font-size: 25px;
+}
+
+.form-input, .input-group-append, .btn {
+    width: 100%;
+    display: flex;
+}
