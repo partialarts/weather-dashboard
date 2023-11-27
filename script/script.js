@@ -19,6 +19,8 @@ var getWeather = function () {
         }));
     }).then(function (data) {
         console.log(data);
+
+        // Display the current weather
         var cityTitle = $("<h2>").text(data[0].name + " " + date);
         var currentTemp = $("<p>").text("Temp: " + data[0].main.temp + " °C");
         var currentWind = $("<p>").text("Wind: " + data[0].wind.speed + " KM/H");
@@ -27,9 +29,15 @@ var getWeather = function () {
         $("#today").append(cityTitle, currentTemp, currentWind, currentHumidity);
         cityTitle.append(currentWeatherIcon);
 
-        var forecastTitle = $("<h3>")
+        // Display the 5-day forecast
+        $("#forecast").append($("<h3>").text("5-Day Forecast:"));
+
         for (i = 0; i < 5; i++) {
             var dayCards = $("<div>");
+            var cardDates = $("<h4>");
+            var cardIcons = $("<img src=http://openweathermap.org/img/wn/" + data[1].list[0].icon + "@2x.png width=60>");
+
+            dayCards.addClass("col-2 mr-3")
 
         }
 
