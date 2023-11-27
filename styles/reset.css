@@ -6,11 +6,21 @@ header {
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#1d0c4d",endColorstr="#3d7cfb",GradientType=1);
 }
 
+
+
+.btn {
+    width: 100%;
+}
+
+#today {
+    border: 1px solid black;
+}
+
 #form-heading {
     font-size: 25px;
 }
 
-.form-input, .input-group-append, .btn {
-    width: 100%;
-    display: flex;
-}
+.container {
+    margin-left: 0;
+    margin-right: 0;
+  }
