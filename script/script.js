@@ -20,7 +20,7 @@ var showDailyForecast = function (data) {
     $("#forecast").empty();
     $("#forecast").append(`<h3>5-Day Forecast:</h3>`);
     for (i = 1; i < 6; i++) {
-        $('#forecast').append(`<div class="dayCards col-lg-2 p-2">
+        $('#forecast').append(`<div class="dayCards col-md-2 mb-3 p-2" style="min-width: 100px">
             <h5>${dayjs.unix(data.daily[i].dt).format('DD/M/YYYY')}</h5>
             <img src="https://openweathermap.org/img/w/${data.daily[i].weather[0].icon}.png" alt="Weather Conditions Icon" width="50">
             <p>Temp: ${data.daily[i].temp.day} °C</p>
@@ -28,42 +28,56 @@ var showDailyForecast = function (data) {
             <p>Humidity: ${data.daily[i].humidity} %</p>
             </div>
             `);
-
-
-        //         <div class="forecast-cards col-2 mr-3">
-        //             <h5 class="text-center">${dayjs(date).format('MM/DD/YYYY')}</h5>
-        //             <img src="https://openweathermap.org/img/w/${forecast.weather[0].icon}.png" alt="Weather Icon" class="forecastIcon">
-        //             <p>Temperature: ${forecast.main.temp}°F</p>
-        //             <p>Humidity: ${forecast.main.humidity}%</p>
-        //             <p>Wind Speed: ${forecast.wind.speed} m/s</p>
-        //         </div>
-        //         `);
-        //     dayCards.addClass("col-2 mr-3")
     }
 };
 
-var queryWeather = function () {
-    var cityInput = $("#search-input").val().trim();
-    var queryGeoURL = "http://api.openweathermap.org/geo/1.0/direct?q=" + cityInput + "&limit=1&appid=" + APIKey;
+var queryWeather = function (city) {
+    var queryGeoURL = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&limit=1&appid=" + APIKey;
     fetch(queryGeoURL)
         .then(function (response) {
             return response.json();
         }).then(function (geoData) {
-            var lat = geoData[0].lat;
-            var lon = geoData[0].lon;
-            var queryWeatherURL = "https://api.openweathermap.org/data/3.0/onecall?lat=" + lat + "&lon=" + lon + "&exclude=minutely,hourly&appid=" + APIKey + "&units=metric";
-            var cityName = geoData[0].name
-            fetch(queryWeatherURL)
-                .then(function (response) {
-                    return response.json();
-                }).then(function (weatherData) {
-                    showCurrentWeather(cityName, weatherData);
-                    showDailyForecast(weatherData)
-                });
+            if (geoData.length > 0) {
+                var lat = geoData[0].lat;
+                var lon = geoData[0].lon;
+                var queryWeatherURL = "https://api.openweathermap.org/data/3.0/onecall?lat=" + lat + "&lon=" + lon + "&exclude=minutely,hourly&appid=" + APIKey + "&units=metric";
+                var cityName = geoData[0].name
+                fetch(queryWeatherURL)
+                    .then(function (response) {
+                        return response.json();
+                    }).then(function (weatherData) {
+                        showCurrentWeather(cityName, weatherData);
+                        showDailyForecast(weatherData)
+                        if ($(`.city-button:contains('${cityName}')`).length === 0) {
+                            $('#history').append(`<button type="submit" class="btn city-button btn-secondary mb-3" aria-label="submit">${cityName}</button>`)
+                        }
+                    });
+            } else {
+                alert("No city found, please try again.");
+            }
         });
 };
 
+$(".hour").each(function () {
+    var thisHour = JSON.parse(localStorage.getItem($(this).text())); // Variable to return key/value pairs from localStorage and store as object
+    if (thisHour !== null) { // Checks if key/value pair exists on each iteration
+        $(this).siblings("textarea").val(thisHour); // Adds the the value from the object to the sibling textarea field
+    }
+});
+
+// Event listener for user generated city buttons
+$(document).on("click", ".city-button", function () {
+    var cityClicked = $(this).text() // Get text from button
+    queryWeather(cityClicked); // Call queryWeather function and pass in text from button 
+});
+
+// Event listener for main search button
 $("#search-button").on("click", function (event) {
-    event.preventDefault();
-    queryWeather();
-})
+    event.preventDefault(); // Prevent default form behaviour
+    var cityInput = $("#search-input").val().trim(); // Get value from form field and trim any space around
+    if (cityInput !== '') { // Check that field isn't blank
+        queryWeather(cityInput); // Call queryWeather function and pass in text from form field 
+    } else {
+        alert("Enter a valid city")
+    }
+});

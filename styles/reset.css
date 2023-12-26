@@ -6,6 +6,11 @@ header {
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#1d0c4d",endColorstr="#3d7cfb",GradientType=1);
 }
 
+a {
+    text-decoration: none;
+    color: white;
+}
+
 .dayCards {
     background-color: #485864;
     color: white;
@@ -19,9 +24,9 @@ header {
     border: 1px solid black;
 }
 
-.container {
-    margin-left: 0;
-    margin-right: 0;
+.container-fluid {
+    margin-left: 0px !important;
+    /* margin-right: 0px !important; */
   }
 
 .hide {
@@ -46,7 +51,7 @@ h3 {
 }
 
 h5 {
-    font-size: 17px;
+    font-size: 16px;
 }
 
 p {
@@ -59,4 +64,8 @@ p {
 
 .row {
     margin-right: 0 !important;
+}
+
+#form-heading {
+    font-size: 24px;
 }
