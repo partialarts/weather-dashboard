@@ -62,7 +62,6 @@ var queryWeather = function (city) {
         });
 };
 
-
 // Function to store search value in localStorage
 var storeCity = function (city) {
     cityHistory.push(city); // Push city to cityHistory array
