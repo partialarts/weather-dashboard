@@ -24,7 +24,7 @@ Input a city name into the search field and click `Search`. The weather for that
 
 ![The application includes a field for a city name and a search button. Weather information is dynamically generated using HTML](./images/screenshot.jpg)
 
-### External Tutorials and Resources
+## External Tutorials and Resources
 
 * [OpenWeather API](https://openweathermap.org/api)
 * [Day.js](https://day.js.org/)
