@@ -35,7 +35,7 @@ var showDailyForecast = function (data) {
 
 // Function to query weather API's
 var queryWeather = function (city) {
-    var queryGeoURL = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&limit=1&appid=" + APIKey;
+    var queryGeoURL = "https://api.openweathermap.org/geo/1.0/direct?q=" + city + "&limit=1&appid=" + APIKey;
     fetch(queryGeoURL) // fetch call to get coordinates
         .then(function (response) {
             return response.json();
